@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href="style.css" rel="stylesheet" />
+    <!--[if gte IE 9]>
+      <style type="text/css">
+        .morsel {
+           filter: none;
+        }
+      </style>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="container" class="container"></div>
+    <script type="template" id="morsel-template">
+      <a class="morsel" href="<%=url%>" target="_blank">
+        <div class="morsel-bg" style="background-image:url(<%=coverPhoto%>)"></div>
+        <div class="morsel-caption-wrap">
+          <div class="morsel-caption">
+            <h2 class="morsel-title"><%= title %></h2>
+          </div>
+        </div>
+        <div class="user-info">
+          <img src="<%=creator.photos._40x40%>" />
+          <h3 class="morsel-creator"><%=creator.first_name+' '+creator.last_name%></h3>
+        </div>
+      </a>
+    </script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="scripts.js"></script>
+  </body>
+</html>
