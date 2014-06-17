@@ -54,7 +54,35 @@ body {
 }
 
 .container {
-  background-color: #e2ddd7;
+  padding: 20px 20px 10px;
+  border-radius: 5px;
+  background: #030000 url(/assets/images/morsel-detail-noise.png) top left repeat;
+}
+
+.morsel-container {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.morsel-container .loader {
+  display: none;
+}
+
+.morsel-container.loading {
+  height: 300px;
+  background: transparent url(/assets/images/morsel-placeholder.jpg) center center no-repeat;
+  background-size: cover;
+}
+
+.morsel-container.loading .loader {
+  display: block;
+}
+
+.loader {
+  margin-top: 20px;
+  width: 100%;
+  background: url(/assets/images/loader-white.gif) center center no-repeat;
+  height: 100px;
 }
 
 .morsel {
@@ -63,7 +91,16 @@ body {
   height: 300px;
   position: relative;
   overflow: hidden;
-  
+  background-color: white;
+}
+
+.morsel-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%); /* FF3.6+ */
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.85))); /* Chrome,Safari4+ */
   background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.85) 100%); /* Chrome10+,Safari5.1+ */
@@ -77,7 +114,7 @@ body {
   cursor: pointer;
 }
 
-.morsel:hover .morsel-bg, .morsel:hover .user-info img {
+.morsel:hover .morsel-img, .morsel:hover .user-info img {
   -webkit-filter: grayscale(0%);
   opacity: 1;
 }
@@ -86,33 +123,28 @@ body {
   -webkit-transform: scale(1.1);
 }
 
-.morsel-bg {
+.morsel-img {
   display: block;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   width: 100%;
   height: 100%;
-  position: relative;
+  z-index: 2;
+  position: absolute;
   -webkit-filter: grayscale(30%);
   opacity: .7;
   transition: all .1s ease-out;
 }
 
-.morsel-container {
-  clear: both;
-  overflow: hidden;
-}
-
 .morsel-caption-wrap {
+  z-index: 3;
   display: table;
   text-align: center;
   width: 100%;
-  z-index: 3;
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 2;
   height: 300px;
   clear: both;
 }
@@ -145,6 +177,7 @@ body {
   text-align: center;
   text-shadow: rgb(0, 0, 0) 0px 1px 2px;
   color: white;
+  z-index: 3;
 }
 
 .user-info img {
@@ -161,13 +194,42 @@ body {
   font-family: 'Roboto Slab', 'Helvetica Neue Light', 'Helvetica Neue', Arial, sans-serif;
 }
 
+.powered-by-morsel {
+  text-align: center;
+  color: white;
+}
+
+.powered-by-morsel a {
+  background: url(/assets/images/morsel-text.png) center top no-repeat;
+  background-size: 130px 59px;
+  width: 130px;
+  height: 59px;
+  display: inline-block;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .morsel-text {
+    background-image: url(/assets/images/morsel-text@2x.png);
+  }
+}
+
 @media (min-width: 480px) {
+  .morsel-container.loading {
+    height: 400px;
+  }
+
   .morsel {
     width: 50%;
   }
 }
 
 @media (min-width: 768px) {
+  .morsel-container.loading {
+    height: 640px;
+  }
+
   .morsel {
     width: 33.3333%;
   }

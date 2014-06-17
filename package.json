@@ -1,0 +1,21 @@
+{
+  "author": "Morsel",
+  "name": "Morsel_Press_Kit",
+  "version": "0.0.1",
+  "homepage": "http://www.eatmorsel.com",
+  "licenses": {
+    "type": "",
+    "url": ""
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "dependencies": {
+    "express": "~4.4.1",
+    "hbs": "~2.7.0",
+    "compression": "~1.0.3"
+  },
+  "devDependencies": {
+  }
+}

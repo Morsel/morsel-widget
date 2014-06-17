@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link href="style.css" rel="stylesheet" />
+    <link href="/style/style.css" rel="stylesheet" />
     <!--[if gte IE 9]>
       <style type="text/css">
         .morsel {
@@ -14,10 +14,16 @@
     <![endif]-->
   </head>
   <body>
-    <div id="container" class="container"></div>
+    <div class="container">
+      <div id="morsel-container" class="morsel-container loading">
+        <div class="loader"></div>
+      </div>
+      <div class="powered-by-morsel">
+        <h4><a href="http://eatmorsel.com" target="_blank">Morsel</a></h4>
+      </div>
+    </div>
     <script type="template" id="morsel-template">
       <a class="morsel" href="<%=url%>" target="_blank">
-        <div class="morsel-bg" style="background-image:url(<%=coverPhoto%>)"></div>
         <div class="morsel-caption-wrap">
           <div class="morsel-caption">
             <h2 class="morsel-title"><%= title %></h2>
@@ -27,10 +33,17 @@
           <img src="<%=creator.photos._40x40%>" />
           <h3 class="morsel-creator"><%=creator.first_name+' '+creator.last_name%></h3>
         </div>
+        <div class="morsel-bg"></div>
+        <div class="morsel-img" style="background-image:url(<%=coverPhoto%>)"></div>
       </a>
     </script>
+    <script>
+      var morselConfig = {
+        placeId: {{{placeId}}}
+      };
+    </script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="iframeResizer.contentWindow.min.js"></script>
-    <script type="text/javascript" src="scripts.js"></script>
+    <script type="text/javascript" src="/js/iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript" src="/js/scripts.js"></script>
   </body>
 </html>
