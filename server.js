@@ -3,6 +3,8 @@ var express = require("express");
 //create our app and expose it
 var app = express();
 
+var port = Number(process.env.PORT || 5000);
+
 //enable gzip
 var compress = require('compression');
 app.use(compress());
@@ -29,6 +31,6 @@ app.get('/shell/:id', function(req, res){
   });
 });
 
-httpServer = app.listen(5001, function() {
-  console.log("Listening on " + 5001);
+httpServer = app.listen(port, function() {
+  console.log("Listening on " + port);
 });
