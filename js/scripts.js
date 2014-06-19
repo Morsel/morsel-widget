@@ -12,32 +12,50 @@ $.waitForImages.hasImgProperties = ['backgroundImage'];
 
 $(function(){
   $.ajax({
-    url: 'http://api-staging.eatmorsel.com/places/'+morselConfig.placeId+'/morsels.json?client%5Bdevice%5D=webwidget'
+    url: 'http://api-staging.eatmorsel.com/places/'+morselConfig.placeId+'/morsels.json?count=9&client%5Bdevice%5D=webwidget'
   }).done(function(resp){
     var morselData = resp.data,
         $mrslTemplate = $('#morsel-template'),
         $container = $('#morsel-container'),
-        $temp = $('<div />'),
-        coverPhoto;
+        $morselPreload = $('<div />'),
+        $mrslTemp,
+        $bigImages = $('<div />');
 
     _.each(morselData, function(m, i) {
+      var $imagePreload,
+          $morselImg,
+          coverPhotoBig;
+
       m.coverPhoto = getCoverPhoto(m);
       if(m.coverPhoto) {
-        $temp.append(_.template($mrslTemplate.html(), m));
+        coverPhotoBig = getCoverPhoto(m, true);
+        $mrslTemp = $(_.template($mrslTemplate.html(), m));
+        $morselImg = $mrslTemp.find('.morsel-img');
+        $morselPreload.append($mrslTemp);
+        $imagePreload = $('<div><img src="'+coverPhotoBig+'" /></div>');
+        $imagePreload.waitForImages(function(){
+          $morselImg.css({'background-image':'url('+coverPhotoBig+')'});
+        });
       }
     });
 
-    $temp.waitForImages(function() {
-      $container.append($temp).removeClass('loading');
+    $container.append($morselPreload).removeClass('loading-data');
+
+    $morselPreload.waitForImages(function() {
+      $container.removeClass('loading-thumbs');
     }, $.noop, true);
   });
 
-  function getCoverPhoto(morsel) {
+  function getCoverPhoto(morsel, big) {
     var primaryItemPhotos;
 
     primaryItemPhotos = findPrimaryItemPhotos(morsel);
 
-    return primaryItemPhotos ? primaryItemPhotos._320x320 : null;
+    if(big) {
+      return primaryItemPhotos ? primaryItemPhotos._320x320 : null;
+    } else {
+      return primaryItemPhotos ? primaryItemPhotos._50x50 : null;
+    }
   }
 
   function findPrimaryItemPhotos(morsel) {
