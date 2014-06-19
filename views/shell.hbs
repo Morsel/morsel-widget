@@ -6,13 +6,30 @@
 
   </head>
   <body style="background-color: aliceblue;">
-    <h1>This is a test website shell for place id={{{placeId}}}</h1>
+    <header>
+      <h1>PlaceId={{{placeId}}}</h1>
+      <nav>
+        <ul>
+          <li>About</li>
+          <li>Menu</li>
+          <li>Contact</li>
+        </ul>
+      </nav>
+    </header>
     <div style="max-width:1200;margin:0 auto;">
       <div style="padding:0;max-width:960px;margin:0 auto;border:0;height:100%">
+        {{#ifCond nodeEnv 'prod'}}
         <iframe border="0" frameborder="0" SCROLLING="no" style="border:0 none" src="http://morsel-widget.herokuapp.com/places/{{{placeId}}}" width="100%"></iframe>
         <script type="text/javascript" src="http://morsel-widget.herokuapp.com/js/iframeResizer.min.js"></script>
+        {{else}}
+        <iframe border="0" frameborder="0" SCROLLING="no" style="border:0 none" src="/places/{{{placeId}}}" width="100%"></iframe>
+        <script type="text/javascript" src="/js/iframeResizer.min.js"></script>
+        {{/ifCond}}
         <script>iFrameResize();</script>
       </div>
     </div>
+    <footer>
+      
+    </footer>
   </body>
 </html>
