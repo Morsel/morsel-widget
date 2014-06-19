@@ -21,6 +21,10 @@ $(function(){
         $mrslTemp,
         $bigImages = $('<div />');
 
+    morselData = _.sortBy(morselData, function(m){
+      return -m.created_at;
+    });
+
     _.each(morselData, function(m, i) {
       var $imagePreload,
           $morselImg,
