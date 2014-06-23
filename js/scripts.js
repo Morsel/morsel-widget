@@ -169,7 +169,7 @@ $(function(){
 
   function getItemPhoto(item) {
     if(item.photos) {
-      return item.photos._480x480;
+      return item.photos._640x640;
     } else {
       return morselPlaceholderUrl;
     }
