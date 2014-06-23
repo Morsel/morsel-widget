@@ -19,8 +19,7 @@ $(function(){
       userPlaceholderUrl = '/assets/images/avatar_72x72.jpg',
       stagingUrl = 'http://api-staging.eatmorsel.com',
       siteUrl = 'http://dev.eatmorsel.com',
-      transformProperty,
-      fullMorselHeight = 600;
+      transformProperty;
 
   ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
     var e = prefix + 'Transform';
@@ -165,18 +164,20 @@ $(function(){
   }
 
   function next(e) {
-    var itemNum = $(e.target).data('item-num');
+    var itemNum = $(e.target).data('item-num'),
+        move = $fullMorsel.find('.morsel-item').first().height();
 
     e.preventDefault();
 
-    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum + 1) * fullMorselHeight) + 'px, 0)');
+    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum + 1) * move) + 'px, 0)');
   }
 
   function prev(e) {
-    var itemNum = $(e.target).data('item-num');
+    var itemNum = $(e.target).data('item-num'),
+        move = $fullMorsel.find('.morsel-item').first().height();
 
     e.preventDefault();
 
-    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum-1) * fullMorselHeight) + 'px, 0)');
+    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum-1) * move) + 'px, 0)');
   }
 });

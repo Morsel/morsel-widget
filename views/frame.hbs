@@ -48,8 +48,15 @@
     </script>
     <script type="template" id="morsel-full-template">
       <div class="morsel-full">
+        <div class="morsel-mobile-info">
+          <h2 class="morsel-title"><%= title %></h2>
+          <a href="<%= getUserLink(creator) %>" class="user-link" target="_blank">
+            <span><img src="<%= getUserPhoto(creator) %>" /></span> <%= creator.first_name + ' ' + creator.last_name %>
+          </a>
+        </div>
       <% for(var i=0;i<items.length;i++) { %>
         <div class="morsel-item">
+          <hr />
           <div>
             <div class="item-img-wrap">
               <div class="item-img">
