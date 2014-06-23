@@ -108,24 +108,21 @@ $(function(){
       }
     });
 
-    setTimeout(function(){
-      //check if we have cached data
-      if(morselFullData[e.data.morselId]) {
-        makeFullMorsel(morselFullData[e.data.morselId]);
-      } else {
-        $.ajax({
-          url: /*'/assets/morsel.json'*/stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
-        }).done(function(resp){
-          var morselData = resp.data;
+    //check if we have cached data
+    if(morselFullData[e.data.morselId]) {
+      makeFullMorsel(morselFullData[e.data.morselId]);
+    } else {
+      $.ajax({
+        url: /*'/assets/morsel.json'*/stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
+      }).done(function(resp){
+        var morselData = resp.data;
 
-          //cache our morselData
-          morselFullData[morselData.id] = morselData;
+        //cache our morselData
+        morselFullData[morselData.id] = morselData;
 
-          makeFullMorsel(morselData);
-        });
-      }
-    }, 3000);
-    
+        makeFullMorsel(morselData);
+      });
+    }
   }
 
   function makeFullMorsel(morselData) {
