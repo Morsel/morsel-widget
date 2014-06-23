@@ -363,7 +363,6 @@ h1, h2, h3, h4, h5, a {
 
 .item-description {
   font-weight: 300;
-  max-height: 200px;
   overflow: auto;
   padding: 5px 10px;
   line-height: 20px;
@@ -466,6 +465,10 @@ hr {
     width: 50%;
     float: left;
     height: 100%;
+  }
+
+  .item-description {
+    max-height: 200px;
   }
 
   .morsel-item .morsel-title {
