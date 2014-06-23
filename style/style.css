@@ -363,7 +363,7 @@ h1, h2, h3, h4, h5, a {
 
 .item-description {
   font-weight: 300;
-  max-height: 400px;
+  max-height: 200px;
   overflow: auto;
   padding: 5px 10px;
   line-height: 20px;
