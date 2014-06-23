@@ -63,10 +63,12 @@ img {
 
 a {
   text-decoration: none;
+  color: #ee8872;
 }
 
 a:hover {
   text-decoration: underline;
+  color: #e96144;
 }
 
 .container {
@@ -116,6 +118,7 @@ h1, h2, h3, h4, h5, a {
   width: 100%;
   background: url(/assets/images/loader.gif) center center no-repeat;
   height: 120px;
+  position: relative;
 }
 
 .morsel {
@@ -263,14 +266,36 @@ h1, h2, h3, h4, h5, a {
 
 .morsel-full-slide {
   overflow: hidden;
+  position: absolute;
 }
 
 .morsel-full {
   width: 100%;
 }
 
-.morsel-full-container.expanded {
+.morsel-full-container.expanding, .morsel-full-container.expanded {
   display: block;
+}
+
+.morsel-full-container.expanded .close-btn {
+  display: inline-block;
+}
+
+.morsel-full-container.expanding .morsel-full-slide {
+  background-color: #f3f1ef;
+  -webkit-transition: all .5s ease-out;
+  transition: all .5s ease-out;
+}
+
+.morsel-full-slide .loader {
+  display: none;
+  height: 470px;
+  margin-top: 0;
+}
+
+.morsel-full-container.expanding .morsel-full-slide .loader {
+  display: block;
+  z-index: 12;
 }
 
 .morsel-item {
@@ -290,7 +315,6 @@ h1, h2, h3, h4, h5, a {
 }
 
 .user-link {
-  color: #e96144;
   line-height: 72px;
   vertical-align: middle;
   font-size: 22px;
@@ -329,6 +353,7 @@ h1, h2, h3, h4, h5, a {
   z-index: 11;
   color: #394038;
   font-size: 22px;
+  display: none;
 }
 
 .close-btn:hover {
@@ -402,6 +427,10 @@ hr {
     -ms-transform: translate3d(0px, 0px, 0px) !important;
     transform: translate3d(0px, 0px, 0px) !important;
   }
+
+  .morsel-full-container.expanded .morsel-full-slide {
+    top: 0 !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -413,14 +442,24 @@ hr {
     width: 33.3333%;
   }
 
+  .morsel-full-slide {
+    margin-top: 0;
+    box-shadow: 0px 2px 3px 1px rgba(0,0,0,1);
+    -webkit-box-shadow: 0px 2px 3px 1px rgba(0,0,0,1);
+  }
+
   .morsel-full {
-    height: 600px;
+    height: 470px;
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
   }
 
   .morsel-mobile-info {
     display: none;
+  }
+
+  .close-btn {
+    top: 215px;
   }
 
   .morsel-item > div {
@@ -468,10 +507,6 @@ hr {
     display: block;
     text-align: center;
     line-height: 24px;
-  }
-
-  .item-control a {
-    color: #e96144;
   }
 
   .item-control a {
