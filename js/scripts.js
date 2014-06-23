@@ -11,15 +11,40 @@
 $.waitForImages.hasImgProperties = ['backgroundImage'];
 
 $(function(){
+  var $morselFullContainer = $('#morsel-full-container'),
+      $morselFullSlide = $('#morsel-full-slide'),
+      $morselFullTemplate = $('#morsel-full-template'),
+      morselFullData = {},
+      morselPlaceholderUrl = '/assets/images/morsel-placeholder.jpg',
+      userPlaceholderUrl = '/assets/images/avatar_72x72.jpg',
+      stagingUrl = 'http://api-staging.eatmorsel.com',
+      siteUrl = 'http://dev.eatmorsel.com',
+      transformProperty,
+      fullMorselHeight = 600;
+
+  ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
+    var e = prefix + 'Transform';
+    if (typeof document.body.style[e] !== 'undefined') {
+      transformProperty = e;
+      return false;
+    }
+    return true;
+  });
+
+  $morselFullContainer.find('.close-btn').on('click', closeMorsel);
+
   $.ajax({
-    url: 'http://api-staging.eatmorsel.com/places/'+morselConfig.placeId+'/morsels.json?count=9&client%5Bdevice%5D=webwidget'
-  }).done(function(resp){
+    url: '/assets/mfkMorsels.json'//stagingUrl + '/places/'+morselConfig.placeId+'/morsels.json?count=9&client%5Bdevice%5D=webwidget'
+  }).done(makeGrid);
+
+  function makeGrid(resp) {
     var morselData = resp.data,
-        $mrslTemplate = $('#morsel-template'),
-        $container = $('#morsel-container'),
+        $mrslGridTemplate = $('#morsel-grid-template'),
+        $gridContainer = $('#morsel-grid-container'),
         $morselPreload = $('<div />'),
         $mrslTemp,
-        $bigImages = $('<div />');
+        $bigImages = $('<div />'),
+        $fullMorsel;
 
     morselData = _.sortBy(morselData, function(m){
       return -m.created_at;
@@ -33,9 +58,12 @@ $(function(){
       m.coverPhoto = getCoverPhoto(m);
       if(m.coverPhoto) {
         coverPhotoBig = getCoverPhoto(m, true);
-        $mrslTemp = $(_.template($mrslTemplate.html(), m));
+        $mrslTemp = $(_.template($mrslGridTemplate.html(), m));
         $morselImg = $mrslTemp.find('.morsel-img');
         $morselPreload.append($mrslTemp);
+        $mrslTemp.on('click', {
+          morselId: m.id
+        }, expandMorsel);
         $imagePreload = $('<div><img src="'+coverPhotoBig+'" /></div>');
         $imagePreload.waitForImages(function(){
           $morselImg.css({'background-image':'url('+coverPhotoBig+')'});
@@ -43,12 +71,52 @@ $(function(){
       }
     });
 
-    $container.append($morselPreload).removeClass('loading-data');
+    $gridContainer.append($morselPreload).removeClass('loading-data');
 
     $morselPreload.waitForImages(function() {
-      $container.removeClass('loading-thumbs');
+      $gridContainer.removeClass('loading-thumbs');
     }, $.noop, true);
-  });
+  }
+
+  function expandMorsel(e) {
+    $morselFullContainer.addClass('expanded');
+
+    //check if we have cached data
+    if(morselFullData[e.data.morselId]) {
+      makeFullMorsel(morselFullData[e.data.morselId]);
+    } else {
+      $.ajax({
+        url: '/assets/morsel.json'//stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
+      }).done(function(resp){
+        var morselData = resp.data;
+
+        //cache our morselData
+        morselFullData[morselData.id] = morselData;
+
+        makeFullMorsel(morselData);
+      });
+    }
+
+    e.preventDefault();
+  }
+
+  function makeFullMorsel(morselData) {
+    //give template access to these
+    morselData.getItemPhoto = getItemPhoto;
+    morselData.getUserPhoto = getUserPhoto;
+    morselData.getUserLink = getUserLink;
+
+    $fullMorsel = $(_.template($morselFullTemplate.html(), morselData));
+
+    $fullMorsel.find('.next-item').on('click', next);
+    $fullMorsel.find('.prev-item').on('click', prev);
+    $morselFullSlide.html($fullMorsel);
+  }
+
+  function closeMorsel(e) {
+    e.preventDefault();
+    $morselFullContainer.removeClass('expanded');
+  }
 
   function getCoverPhoto(morsel, big) {
     var primaryItemPhotos;
@@ -60,6 +128,26 @@ $(function(){
     } else {
       return primaryItemPhotos ? primaryItemPhotos._50x50 : null;
     }
+  }
+
+  function getItemPhoto(item) {
+    if(item.photos) {
+      return item.photos._640x640;
+    } else {
+      return morselPlaceholderUrl;
+    }
+  }
+
+  function getUserPhoto(user) {
+    if(user.photos) {
+      return user.photos._72x72;
+    } else {
+      return userPlaceholderUrl;
+    }
+  }
+
+  function getUserLink(user) {
+    return siteUrl + '/' + user.username;
   }
 
   function findPrimaryItemPhotos(morsel) {
@@ -74,5 +162,21 @@ $(function(){
     } else {
       return null;
     }
+  }
+
+  function next(e) {
+    var itemNum = $(e.target).data('item-num');
+
+    e.preventDefault();
+
+    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum + 1) * fullMorselHeight) + 'px, 0)');
+  }
+
+  function prev(e) {
+    var itemNum = $(e.target).data('item-num');
+
+    e.preventDefault();
+
+    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum-1) * fullMorselHeight) + 'px, 0)');
   }
 });

@@ -16,15 +16,21 @@
   </head>
   <body>
     <div class="container">
-      <div id="morsel-container" class="morsel-container loading-thumbs loading-data">
-        <div class="loader"></div>
+      <div class="morsel-container">
+        <div id="morsel-grid-container" class="morsel-grid-container loading-thumbs loading-data">
+          <div class="loader"></div>
+        </div>
+        <div id="morsel-full-container" class="morsel-full-container">
+          <a href="#" class="close-btn">&times;</a>
+          <div id="morsel-full-slide" class="morsel-full-slide"></div>
+        </div>
       </div>
       <div class="powered-by-morsel">
         <p>Powered by<a href="http://eatmorsel.com" target="_blank">Morsel</a></p>
       </div>
     </div>
-    <script type="template" id="morsel-template">
-      <a class="morsel" href="<%=url.replace('staging','dev')%>" target="_blank">
+    <script type="template" id="morsel-grid-template">
+      <a class="morsel" href="#">
         <div class="morsel-wrap">
           <div class="morsel-caption-wrap">
             <div class="morsel-caption">
@@ -39,6 +45,42 @@
           <div class="morsel-img" style="background-image:url(<%=coverPhoto%>)"></div>
         </div>
       </a>
+    </script>
+    <script type="template" id="morsel-full-template">
+      <div class="morsel-full">
+      <% for(var i=0;i<items.length;i++) { %>
+        <div class="morsel-item">
+          <div>
+            <div class="item-img-wrap">
+              <div class="item-img">
+                <div>
+                  <img src="<%= getItemPhoto(items[i]) %>" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item-info">
+            <% if(i > 0) { %>
+            <div class="item-control prev-item">
+              <a href="#" data-item-num="<%= i %>">Previous</a>
+            </div>
+            <% } %>
+            <h2 class="morsel-title"><%= title %></h2>
+            <a href="<%= getUserLink(creator) %>" class="user-link" target="_blank">
+              <span><img src="<%= getUserPhoto(creator) %>" /></span> <%= creator.first_name + ' ' + creator.last_name %>
+            </a>
+            <div class="item-description">
+              <p><%= items[i].description %></p>
+            </div>
+            <% if(i < items.length-1) { %>
+            <div class="item-control next-item">
+              <a href="#" data-item-num="<%= i %>">Next</a>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <% } %>
+      </div>
     </script>
     <script>
       var morselConfig = {
