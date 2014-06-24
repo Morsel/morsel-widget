@@ -52,9 +52,9 @@
       <div class="morsel-full">
         <div class="morsel-mobile-info">
           <h2 class="morsel-title"><%= title %></h2>
-          <a href="<%= getUserLink(creator) %>" class="user-link" target="_blank">
+          <div class="user">
             <span><img src="<%= getUserPhoto(creator) %>" /></span> <%= creator.first_name + ' ' + creator.last_name %>
-          </a>
+          </div>
         </div>
       <% for(var i=0;i<items.length;i++) { %>
         <div class="morsel-item">
@@ -75,9 +75,9 @@
             </div>
             <% } %>
             <h2 class="morsel-title"><%= title %></h2>
-            <a href="<%= getUserLink(creator) %>" class="user-link" target="_blank">
+            <div class="user">
               <span><img src="<%= getUserPhoto(creator) %>" /></span> <%= creator.first_name + ' ' + creator.last_name %>
-            </a>
+            </div>
             <div class="item-description">
               <p><%= items[i].description %></p>
             </div>

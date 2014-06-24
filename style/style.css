@@ -78,7 +78,7 @@ a:hover {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
 }
 
-h1, h2, h3, h4, h5, a {
+h1, h2, h3, h4, h5, a, .user {
   font-family: 'Roboto Slab', 'Helvetica Neue Light', 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -314,7 +314,7 @@ h1, h2, h3, h4, h5, a {
   padding: 15px 20px 15px;
 }
 
-.user-link {
+.user {
   line-height: 72px;
   vertical-align: middle;
   font-size: 22px;
@@ -323,7 +323,7 @@ h1, h2, h3, h4, h5, a {
   display: inline-block;
 }
 
-.user-link span {
+.user span {
   display: inline-block;
   padding: 2px;
   float: left;
@@ -331,13 +331,13 @@ h1, h2, h3, h4, h5, a {
   line-height: 0;
 }
 
-.user-link span img {
+.user span img {
   -webkit-box-shadow: 0 0 0 1px #e6e6e6, 0 0 0 2px #fafafa;
   box-shadow: 0 0 0 1px #e6e6e6, 0 0 0 2px #fafafa;
   border-radius: 50%;
 }
 
-.morsel-item .user-link {
+.morsel-item .user {
   display: none;
 }
 
@@ -495,7 +495,7 @@ hr {
     white-space: normal;
   }
 
-  .morsel-full .user-link {
+  .morsel-full .user {
     display: inline-block;
   }
 

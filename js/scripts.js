@@ -82,7 +82,8 @@ $(function(){
   function expandMorsel(e) {
     var $morselLink = $(e.currentTarget),
         morselHeight = $morselLink.height(),
-        morselTop = $morselLink.position().top;
+        morselTop = $morselLink.position().top,
+        morselId = e.data.morselId;
 
     e.preventDefault();
 
@@ -96,6 +97,20 @@ $(function(){
 
     //delay so css transitions kick in
     _.defer(function(){
+      var halfSecondPromise = $.Deferred(),
+          dataPromise = $.Deferred(),
+          promises = [halfSecondPromise, dataPromise];
+
+      //when all our promises are complete, try to render morsel
+      $.when.apply($, promises).then(function(){
+        makeFullMorsel(morselFullData[morselId]);
+      });
+
+      //set a promise for a half second from now, so CSS transition can fully run
+      setTimeout(function(){
+        halfSecondPromise.resolve();
+      }, 500);
+
       $morselFullSlide.css({
         left: 0,
         top: '210px',
@@ -106,23 +121,25 @@ $(function(){
       if(morselTop > morselHeight*2) {
         $window.scrollTop(0);
       }
+
+      //check if we have cached data
+      if(morselFullData[morselId]) {
+        //we've already got our data, resolve
+        dataPromise.resolve();
+      } else {
+        $.ajax({
+          url: /*'/assets/morsel.json'*/stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
+        }).done(function(resp){
+          var morselData = resp.data;
+
+          //cache our morselData
+          morselFullData[morselData.id] = morselData;
+
+          //we've stored our data, resolve
+          dataPromise.resolve();
+        });
+      }
     });
-
-    //check if we have cached data
-    if(morselFullData[e.data.morselId]) {
-      makeFullMorsel(morselFullData[e.data.morselId]);
-    } else {
-      $.ajax({
-        url: /*'/assets/morsel.json'*/stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
-      }).done(function(resp){
-        var morselData = resp.data;
-
-        //cache our morselData
-        morselFullData[morselData.id] = morselData;
-
-        makeFullMorsel(morselData);
-      });
-    }
   }
 
   function makeFullMorsel(morselData) {
@@ -135,14 +152,18 @@ $(function(){
 
     $fullMorsel.find('.next-item').on('click', next);
     $fullMorsel.find('.prev-item').on('click', prev);
-    $morselFullSlide.html($fullMorsel);
 
-    $morselFullContainer.removeClass('expanding').addClass('expanded');
-    $morselFullSlide.css({
-      top: '210px',
-      left: 'auto',
-      height: 'auto',
-      width: 'auto'
+    //wait until at least the first item's photos load, others can still be loading
+    $fullMorsel.find('.morsel-item').first().waitForImages(function(){
+      $morselFullSlide.html($fullMorsel);
+
+      $morselFullContainer.removeClass('expanding').addClass('expanded');
+      $morselFullSlide.css({
+        top: '210px',
+        left: 'auto',
+        height: 'auto',
+        width: 'auto'
+      });
     });
   }
 
@@ -166,7 +187,7 @@ $(function(){
 
   function getItemPhoto(item) {
     if(item.photos) {
-      return item.photos._640x640;
+      return item.photos._480x480;
     } else {
       return morselPlaceholderUrl;
     }
