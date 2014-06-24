@@ -1,0 +1,7 @@
+.morsel {
+   filter: none;
+}
+
+.morsel-caption .morsel-title, .user-info h3 {
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=3);
+}

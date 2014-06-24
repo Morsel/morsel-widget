@@ -19,8 +19,7 @@ $(function(){
       morselFullHeight = 470,
       morselPlaceholderUrl = '/assets/images/morsel-placeholder_480x480.jpg',
       userPlaceholderUrl = '/assets/images/avatar_72x72.jpg',
-      stagingUrl = 'http://api-staging.eatmorsel.com',
-      siteUrl = 'http://dev.eatmorsel.com',
+      apiUrl = morselConfig.apiUrl || 'http://api-staging.eatmorsel.com',
       transformProperty;
 
   ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
@@ -35,7 +34,7 @@ $(function(){
   $morselFullContainer.find('.close-btn').on('click', closeMorsel);
 
   $.ajax({
-    url: '/assets/mfkMorsels.json'//stagingUrl + '/places/'+morselConfig.placeId+'/morsels.json?count=9&client%5Bdevice%5D=webwidget'
+    url: '/assets/mfkMorsels.json'//apiUrl + '/places/'+morselConfig.placeId+'/morsels.json?count=9&client%5Bdevice%5D=webwidget'
   }).then(makeGrid).fail(function(){
     alert('Oops! Something went wrong. Please try refreshing the page');
   });
@@ -137,7 +136,7 @@ $(function(){
           crossDomain: true,
           contentType: 'application/json; charset=utf-8',
           type: 'GET',
-          url: stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
+          url: apiUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
         }).then(function(resp){
           var morselData = resp.data;
 
@@ -157,7 +156,6 @@ $(function(){
     //give template access to these
     morselData.getItemPhoto = getItemPhoto;
     morselData.getUserPhoto = getUserPhoto;
-    morselData.getUserLink = getUserLink;
 
     $fullMorsel = $(_.template($morselFullTemplate.html(), morselData));
 
@@ -210,10 +208,6 @@ $(function(){
     } else {
       return userPlaceholderUrl;
     }
-  }
-
-  function getUserLink(user) {
-    return siteUrl + '/' + user.username;
   }
 
   function findPrimaryItemPhotos(morsel) {

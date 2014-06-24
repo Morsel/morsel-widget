@@ -1,6 +1,7 @@
 var express = require("express");
 
-var nodeEnv = process.env.NODE_ENV || 'local';
+var nodeEnv = process.env.NODE_ENV || 'local',
+var apiUrl = nodeEnv === 'local' ? 'http://api-staging.eatmorsel.com' : 'http://api-staging.eatmorsel.com';//'http://api.eatmorsel.com'
 
 //create our app and expose it
 var app = express();
@@ -32,19 +33,13 @@ app.use('/assets', express.static(__dirname + '/assets'));
 app.get('/places/:id', function(req, res){
   res.render('frame', {
     placeId: req.params.id,
-    nodeEnv: nodeEnv
+    nodeEnv: nodeEnv,
+    apiUrl: apiUrl
   });
 });
 
 app.get('/shell/:id', function(req, res){
   res.render('shell', {
-    placeId: req.params.id,
-    nodeEnv: nodeEnv
-  });
-});
-
-app.get('/goat/:id', function(req, res){
-  res.render('goat', {
     placeId: req.params.id,
     nodeEnv: nodeEnv
   });

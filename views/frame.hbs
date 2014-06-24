@@ -7,15 +7,7 @@
 
     <link href="/style/style.css" rel="stylesheet" />
     <!--[if gte IE 9]>
-      <style type="text/css">
-        .morsel {
-           filter: none;
-        }
-
-        .morsel-caption .morsel-title, .user-info h3 {
-          filter: progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=3);
-        }
-      </style>
+      <link href="/style/ie-gte9.css" rel="stylesheet" />
     <![endif]-->
   </head>
   <body>
@@ -97,7 +89,8 @@
     </script>
     <script>
       var morselConfig = {
-        placeId: {{{placeId}}}
+        placeId: {{{placeId}}},
+        apiUrl: {{{apiUrl}}}
       };
     </script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
