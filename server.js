@@ -1,7 +1,7 @@
 var express = require("express");
 
-var nodeEnv = process.env.NODE_ENV || 'local',
-var apiUrl = nodeEnv === 'local' ? 'http://api-staging.eatmorsel.com' : 'http://api-staging.eatmorsel.com';//'http://api.eatmorsel.com'
+var nodeEnv = process.env.NODE_ENV || 'local';
+var apiUrl = nodeEnv === 'local' ? 'http://api.eatmorsel.com'/*'http://api-staging.eatmorsel.com'*/ : 'http://api-staging.eatmorsel.com';//'http://api.eatmorsel.com'
 
 //create our app and expose it
 var app = express();
