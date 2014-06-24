@@ -36,7 +36,9 @@ $(function(){
 
   $.ajax({
     url: '/assets/mfkMorsels.json'//stagingUrl + '/places/'+morselConfig.placeId+'/morsels.json?count=9&client%5Bdevice%5D=webwidget'
-  }).done(makeGrid);
+  }).then(makeGrid).fail(function(){
+    alert('Oops! Something went wrong. Please try refreshing the page');
+  });
 
   function makeGrid(resp) {
     var morselData = resp.data,
@@ -104,6 +106,9 @@ $(function(){
       //when all our promises are complete, try to render morsel
       $.when.apply($, promises).then(function(){
         makeFullMorsel(morselFullData[morselId]);
+      }).fail(function(){
+        closeMorsel({preventDefault: $.noop});
+        alert('Oops! Something went wrong. Please try again or try refreshing the page');
       });
 
       //set a promise for a half second from now, so CSS transition can fully run
@@ -142,7 +147,7 @@ $(function(){
           //we've stored our data, resolve
           dataPromise.resolve();
         }).fail(function(resp){
-          alert(resp);
+          dataPromise.reject();
         });
       }
     });
@@ -175,7 +180,7 @@ $(function(){
 
   function closeMorsel(e) {
     e.preventDefault();
-    $morselFullContainer.removeClass('expanded');
+    $morselFullContainer.removeClass('expanding expanded');
     $morselFullSlide.html('<div class="loader"></div>');
   }
 
