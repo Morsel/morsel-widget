@@ -17,7 +17,7 @@ $(function(){
       $morselFullTemplate = $('#morsel-full-template'),
       morselFullData = {},
       morselFullHeight = 470,
-      morselPlaceholderUrl = '/assets/images/morsel-placeholder.jpg',
+      morselPlaceholderUrl = '/assets/images/morsel-placeholder_480x480.jpg',
       userPlaceholderUrl = '/assets/images/avatar_72x72.jpg',
       stagingUrl = 'http://api-staging.eatmorsel.com',
       siteUrl = 'http://dev.eatmorsel.com',
@@ -128,8 +128,12 @@ $(function(){
         dataPromise.resolve();
       } else {
         $.ajax({
-          url: /*'/assets/morsel.json'*/stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
-        }).done(function(resp){
+          cache: false,
+          crossDomain: true,
+          contentType: 'application/json; charset=utf-8',
+          type: 'GET',
+          url: stagingUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
+        }).then(function(resp){
           var morselData = resp.data;
 
           //cache our morselData
@@ -137,6 +141,8 @@ $(function(){
 
           //we've stored our data, resolve
           dataPromise.resolve();
+        }).fail(function(resp){
+          alert(resp);
         });
       }
     });
@@ -225,7 +231,7 @@ $(function(){
 
     e.preventDefault();
 
-    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum + 1) * move) + 'px, 0)');
+    $fullMorsel.css(transformProperty, 'translate(0, -' + ((itemNum + 1) * move) + 'px)');
   }
 
   function prev(e) {
@@ -234,6 +240,6 @@ $(function(){
 
     e.preventDefault();
 
-    $fullMorsel.css(transformProperty, 'translate3d(0, -' + ((itemNum-1) * move) + 'px, 0)');
+    $fullMorsel.css(transformProperty, 'translate(0, -' + ((itemNum-1) * move) + 'px)');
   }
 });

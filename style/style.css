@@ -1,3 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:300,400);
+
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -53,9 +57,6 @@ table {
   box-sizing: border-box;
 }
 
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700);
-@import url(http://fonts.googleapis.com/css?family=Roboto:300,400);
-
 img {
   max-width: 100%;
   max-height: 100%;
@@ -97,7 +98,6 @@ h1, h2, h3, h4, h5, a, .user {
 
 .morsel-grid-container.loading-data {
   height: 300px;
-  //background: transparent url(/assets/images/morsel-placeholder.jpg) center center no-repeat;
   background-size: cover;
 }
 
@@ -188,6 +188,8 @@ h1, h2, h3, h4, h5, a, .user {
   position: absolute;
   top: 0;
   right: 0;
+  left: 0;
+  bottom: 0;
   height: 300px;
   clear: both;
 }
