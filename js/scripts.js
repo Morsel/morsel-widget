@@ -34,7 +34,7 @@ $(function(){
   $morselFullContainer.find('.close-btn').on('click', closeMorsel);
 
   $.ajax({
-    url: '/assets/mfkMorsels.json'//apiUrl + '/places/'+morselConfig.placeId+'/morsels.json?count=9&client%5Bdevice%5D=webwidget'
+    url: '/cache/morsel.json'
   }).then(makeGrid).fail(function(){
     alert('Oops! Something went wrong. Please try refreshing the page');
   });
@@ -136,7 +136,7 @@ $(function(){
           crossDomain: true,
           contentType: 'application/json; charset=utf-8',
           type: 'GET',
-          url: apiUrl + '/morsels/'+e.data.morselId+'.json?client%5Bdevice%5D=webwidget'
+          url: '/cache/morsels/'+morselId+'.json'
         }).then(function(resp){
           var morselData = resp.data;
 
