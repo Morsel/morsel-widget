@@ -19,7 +19,7 @@ $(function(){
       morselFullHeight = 470,
       morselPlaceholderUrl = '/assets/images/morsel-placeholder_480x480.jpg',
       userPlaceholderUrl = '/assets/images/avatar_72x72.jpg',
-      apiUrl = morselConfig.apiUrl || 'http://api-staging.eatmorsel.com',
+      amazonUrl = 'https://s3.amazonaws.com/morsel-press-kit/cache',
       transformProperty;
 
   ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
@@ -34,13 +34,13 @@ $(function(){
   $morselFullContainer.find('.close-btn').on('click', closeMorsel);
 
   $.ajax({
-    url: '/cache/morsel.json'
+    url: amazonUrl+'/grid/morsels.json'
   }).then(makeGrid).fail(function(){
     alert('Oops! Something went wrong. Please try refreshing the page');
   });
 
   function makeGrid(resp) {
-    var morselData = resp.data,
+    var morselData = JSON.parse(resp).data,
         $mrslGridTemplate = $('#morsel-grid-template'),
         $gridContainer = $('#morsel-grid-container'),
         $morselPreload = $('<div />'),
@@ -132,13 +132,9 @@ $(function(){
         dataPromise.resolve();
       } else {
         $.ajax({
-          cache: false,
-          crossDomain: true,
-          contentType: 'application/json; charset=utf-8',
-          type: 'GET',
-          url: '/cache/morsels/'+morselId+'.json'
+          url: amazonUrl+'/morsels/'+morselId+'.json'
         }).then(function(resp){
-          var morselData = resp.data;
+          var morselData = JSON.parse(resp).data;
 
           //cache our morselData
           morselFullData[morselData.id] = morselData;
