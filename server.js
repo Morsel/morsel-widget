@@ -23,11 +23,13 @@ hbs.registerHelper('ifCond', function(v1, v2, options) {
   }
   return options.inverse(this);
 });
+hbs.registerPartials(__dirname + '/templates');
 
 //static files
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/style', express.static(__dirname + '/style'));
 app.use('/assets', express.static(__dirname + '/assets'));
+app.use('/templates', express.static(__dirname + '/templates'));
 
 
 app.get('/places/:id', function(req, res){
