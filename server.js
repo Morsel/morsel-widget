@@ -30,7 +30,7 @@ app.use('/js', express.static(__dirname + '/js'));
 app.use('/style', express.static(__dirname + '/style'));
 app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/templates', express.static(__dirname + '/templates'));
-
+app.use('/cache', express.static(__dirname + '/cache'));
 
 app.get('/places/:id', function(req, res){
   res.render('frame', {
