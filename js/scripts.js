@@ -39,7 +39,7 @@ $(function(){
     contentType: 'text/plain; charset=utf-8',
     type: 'GET',
     url: amazonUrl+'/grid/morsels.json'
-  }).then(makeGrid).fail(function(){
+  }).then(makeGrid).fail(function(r,s,e){
     alert('Oops! Something went wrong. Please try refreshing the page');
   });
 
