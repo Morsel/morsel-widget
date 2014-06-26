@@ -38,7 +38,7 @@ $(function(){
   $.ajax({
     cache: false,
     crossDomain: true,
-    contentType: 'text/plain; charset=utf-8',
+    contentType: 'application/json; charset=utf-8',
     type: 'GET',
     url: amazonUrl+'/grid/morsels.json'
   }).then(makeGrid).fail(function(r,s,e){
@@ -140,7 +140,7 @@ $(function(){
         $.ajax({
           cache: false,
           crossDomain: true,
-          contentType: 'text/plain; charset=utf-8',
+          contentType: 'application/json; charset=utf-8',
           type: 'GET',
           url: amazonUrl+'/morsels/'+morselId+'.json'
         }).then(function(resp){
