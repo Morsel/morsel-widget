@@ -33,6 +33,8 @@ $(function(){
 
   $morselFullContainer.find('.close-btn').on('click', closeMorsel);
 
+  $.support.cors = true;
+
   $.ajax({
     cache: false,
     crossDomain: true,
