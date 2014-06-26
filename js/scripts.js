@@ -34,6 +34,10 @@ $(function(){
   $morselFullContainer.find('.close-btn').on('click', closeMorsel);
 
   $.ajax({
+    cache: false,
+    crossDomain: true,
+    contentType: 'text/plain; charset=utf-8',
+    type: 'GET',
     url: amazonUrl+'/grid/morsels.json'
   }).then(makeGrid).fail(function(){
     alert('Oops! Something went wrong. Please try refreshing the page');
@@ -132,6 +136,10 @@ $(function(){
         dataPromise.resolve();
       } else {
         $.ajax({
+          cache: false,
+          crossDomain: true,
+          contentType: 'text/plain; charset=utf-8',
+          type: 'GET',
           url: amazonUrl+'/morsels/'+morselId+'.json'
         }).then(function(resp){
           var morselData = JSON.parse(resp).data;
