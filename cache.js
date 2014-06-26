@@ -14,14 +14,16 @@ var s3 = new AWS.S3();
 
 request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%5D=mfkcaching', function (error, response, body) {
   var gridBucket,
-      gridFile;
+      gridFile,
+      gridFileContents;
 
   if (!error && response.statusCode == 200) {
     gridBucket = 'morsel-press-kit/cache/grid';
     gridFile = 'morsels.json';
+    gridFileContents = 'morselCallback('+body+');';
 
     //save a local copy for debugging
-    fs.writeFile('./cache/'+gridFile, body, function(err) {
+    fs.writeFile('./cache/'+gridFile, gridFileContents, function(err) {
       if(err) {
         console.log(err);
       } else {
@@ -34,7 +36,7 @@ request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%
       Bucket: gridBucket,
       Key: gridFile,
       ACL: 'public-read',
-      Body: body,
+      Body: gridFileContents,
     }, function(err, data) {
       if (err) {
         console.log('error uploading to s3: ');
@@ -49,13 +51,16 @@ request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%
     _.each(JSON.parse(body).data, function(m){
       request('http://api.eatmorsel.com/morsels/'+m.id+'.json?count=9&client%5Bdevice%5D=mfkcaching', function (error, response, body) {
         var morselBucket,
-            morselFile;
+            morselFile,
+            morselFileContents;
 
         if (!error && response.statusCode == 200) {
           morselBucket = 'morsel-press-kit/cache/morsels';
           morselFile = m.id+'.json';
 
-          fs.writeFile('./cache/morsels/'+morselFile, body, function(err) {
+          morselFileContents = 'morselCallback('+body+');';
+
+          fs.writeFile('./cache/morsels/'+morselFile, morselFileContents, function(err) {
             if(err) {
               console.log(err);
             } else {
@@ -68,7 +73,7 @@ request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%
             Bucket: morselBucket,
             Key: morselFile,
             ACL: 'public-read',
-            Body: body,
+            Body: morselFileContents,
           }, function(err, data) {
             if (err) {
               console.log('error uploading to s3: ');

@@ -39,6 +39,9 @@ $(function(){
     cache: false,
     crossDomain: true,
     contentType: 'application/json; charset=utf-8',
+    dataType: 'jsonp',
+    jsonp: false,
+    jsonpCallback: 'morselCallback',
     type: 'GET',
     url: amazonUrl+'/grid/morsels.json'
   }).then(makeGrid).fail(function(r,s,e){
@@ -46,7 +49,7 @@ $(function(){
   });
 
   function makeGrid(resp) {
-    var morselData = JSON.parse(resp).data,
+    var morselData = resp.data,
         $mrslGridTemplate = $('#morsel-grid-template'),
         $gridContainer = $('#morsel-grid-container'),
         $morselPreload = $('<div />'),
@@ -141,10 +144,13 @@ $(function(){
           cache: false,
           crossDomain: true,
           contentType: 'application/json; charset=utf-8',
+          dataType: 'jsonp',
+          jsonp: false,
+          jsonpCallback: 'morselCallback',
           type: 'GET',
           url: amazonUrl+'/morsels/'+morselId+'.json'
         }).then(function(resp){
-          var morselData = JSON.parse(resp).data;
+          var morselData = resp.data;
 
           //cache our morselData
           morselFullData[morselData.id] = morselData;
