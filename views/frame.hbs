@@ -7,45 +7,40 @@
 
     <link href="/style/style.css" rel="stylesheet" />
     <!--[if gte IE 9]>
-      <style type="text/css">
-        .morsel {
-           filter: none;
-        }
-      </style>
+      <link href="/style/ie-gte9.css" rel="stylesheet" />
     <![endif]-->
   </head>
   <body>
     <div class="container">
-      <div id="morsel-container" class="morsel-container loading-thumbs loading-data">
-        <div class="loader"></div>
+      <div class="morsel-container">
+        <div id="morsel-grid-container" class="morsel-grid-container loading-thumbs loading-data">
+          <div class="loader"></div>
+        </div>
+        <div id="morsel-full-container" class="morsel-full-container">
+          <a href="#" class="close-btn">&times;</a>
+          <div id="morsel-full-slide" class="morsel-full-slide">
+            <div class="loader"></div>
+          </div>
+        </div>
       </div>
       <div class="powered-by-morsel">
         <p>Powered by<a href="http://eatmorsel.com" target="_blank">Morsel</a></p>
       </div>
     </div>
-    <script type="template" id="morsel-template">
-      <a class="morsel" href="<%=url.replace('staging','dev')%>" target="_blank">
-        <div class="morsel-wrap">
-          <div class="morsel-caption-wrap">
-            <div class="morsel-caption">
-              <h2 class="morsel-title"><%= title %></h2>
-            </div>
-          </div>
-          <div class="user-info">
-            <img src="<%=creator.photos._40x40%>" />
-            <h3 class="morsel-creator"><%=creator.first_name+' '+creator.last_name%></h3>
-          </div>
-          <div class="morsel-bg"></div>
-          <div class="morsel-img" style="background-image:url(<%=coverPhoto%>)"></div>
-        </div>
-      </a>
+    <script type="template" id="morsel-grid-template">
+    {{> morsel_grid}}
+    </script>
+    <script type="template" id="morsel-full-template">
+    {{> morsel_full}}
     </script>
     <script>
       var morselConfig = {
-        placeId: {{{placeId}}}
+        placeId: {{{placeId}}},
+        apiUrl: '{{{apiUrl}}}'
       };
     </script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
     <script type="text/javascript" src="/js/iframeResizer.contentWindow.min.js"></script>
     <script type="text/javascript" src="/js/scripts.js"></script>
   </body>
