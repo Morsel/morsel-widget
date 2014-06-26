@@ -19,7 +19,7 @@ $(function(){
       morselFullHeight = 470,
       morselPlaceholderUrl = '/assets/images/morsel-placeholder_480x480.jpg',
       userPlaceholderUrl = '/assets/images/avatar_72x72.jpg',
-      amazonUrl = 'https://s3.amazonaws.com/morsel-press-kit/cache',
+      amazonUrl = 'http://s3.amazonaws.com/morsel-press-kit/cache',
       transformProperty;
 
   ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
