@@ -20,7 +20,7 @@
     <div class="item-info">
       <% if(i > 0) { %>
       <div class="item-control prev-item">
-        <a href="#" data-item-num="<%= i %>">Previous</a>
+        <span href="#" data-item-num="<%= i %>">Previous</span>
       </div>
       <% } %>
       <h2 class="morsel-title"><%= title %></h2>
@@ -32,7 +32,7 @@
       </div>
       <% if(i < items.length-1) { %>
       <div class="item-control next-item">
-        <a href="#" data-item-num="<%= i %>">Next</a>
+        <span data-item-num="<%= i %>">Next</span>
       </div>
       <% } %>
     </div>
