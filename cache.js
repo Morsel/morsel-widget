@@ -12,7 +12,7 @@ AWS.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_A
 
 var s3 = new AWS.S3();
 
-request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%5D=mfkcaching', function (error, response, body) {
+request('http://api.eatmorsel.com/places/8/morsels.json?count=50&client%5Bdevice%5D=mfkcaching', function (error, response, body) {
   var gridBucket,
       gridFile,
       gridFileContents;
@@ -50,7 +50,7 @@ request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%
     });
 
     _.each(JSON.parse(body).data, function(m){
-      request('http://api.eatmorsel.com/morsels/'+m.id+'.json?count=9&client%5Bdevice%5D=mfkcaching', function (error, response, body) {
+      request('http://api.eatmorsel.com/morsels/'+m.id+'.json?client%5Bdevice%5D=mfkcaching', function (error, response, body) {
         var morselBucket,
             morselFile,
             morselFileContents;
