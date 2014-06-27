@@ -130,6 +130,10 @@ h1, h2, h3, h4, h5, a, .user {
   padding: 1px;
 }
 
+.morsel:hover {
+  cursor: pointer;
+}
+
 .morsel-wrap {
   position: relative;
   width: 100%;
