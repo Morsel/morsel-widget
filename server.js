@@ -36,7 +36,8 @@ app.get('/places/:id', function(req, res){
   res.render('frame', {
     placeId: req.params.id,
     nodeEnv: nodeEnv,
-    apiUrl: apiUrl
+    apiUrl: apiUrl,
+    isProd: nodeEnv !='local'
   });
 });
 
