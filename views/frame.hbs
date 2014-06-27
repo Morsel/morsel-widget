@@ -4,11 +4,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <title>mfk's Morsels</title>
     <link href="/style/style.css" rel="stylesheet" />
     <!--[if gte IE 9]>
       <link href="/style/ie-gte9.css" rel="stylesheet" />
     <![endif]-->
+    {{#if isProd}}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-47265014-1', {
+        'storage': 'none'
+      });
+      ga('send', 'pageview');
+
+    </script>
+    {{/if}}
   </head>
   <body>
     <div class="container">
@@ -43,17 +57,5 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
     <script type="text/javascript" src="/js/iframeResizer.contentWindow.min.js"></script>
     <script type="text/javascript" src="/js/scripts.js"></script>
-    {{#if isProd}}
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-47265014-1', 'eatmorsel.com');
-      ga('send', 'pageview');
-
-    </script>
-    {{/if}}
   </body>
 </html>
