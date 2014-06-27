@@ -13,10 +13,12 @@ $.waitForImages.hasImgProperties = ['backgroundImage'];
 $(function(){
   var $window = $(window),
       $morselFullContainer = $('#morsel-full-container'),
+      $gridContainer = $('#morsel-grid-container'),
+      $closeBtn = $morselFullContainer.find('.close-btn'),
       $morselFullSlide = $morselFullContainer.find('#morsel-full-slide'),
       $morselFullTemplate = $('#morsel-full-template'),
       morselFullData = {},
-      morselFullHeight = 470,
+      morselFullHeight = 390,
       morselPlaceholderUrl = '/assets/images/morsel-placeholder_480x480.jpg',
       userPlaceholderUrl = '/assets/images/avatar_72x72.jpg',
       amazonUrl = 'http://s3.amazonaws.com/morsel-press-kit/cache',
@@ -31,7 +33,14 @@ $(function(){
     return true;
   });
 
-  $morselFullContainer.find('.close-btn').on('click', closeMorsel);
+  //clicking close button or off the lightbox will close expanded morsel
+  $closeBtn.on('click', closeMorsel);
+  $morselFullContainer.on('click', function(e){
+    //make sure click was on the dimmed background, not just within the container
+    if(e.target === this) {
+      closeMorsel(e);
+    }
+  });
 
   $.support.cors = true;
 
@@ -51,7 +60,6 @@ $(function(){
   function makeGrid(resp) {
     var morselData = resp.data,
         $mrslGridTemplate = $('#morsel-grid-template'),
-        $gridContainer = $('#morsel-grid-container'),
         $morselPreload = $('<div />'),
         $mrslTemp,
         $bigImages = $('<div />'),
@@ -93,12 +101,26 @@ $(function(){
     var $morselLink = $(e.currentTarget),
         morselHeight = $morselLink.height(),
         morselTop = $morselLink.position().top,
-        morselId = e.data.morselId;
+        morselId = e.data.morselId,
+        gridContainerHeight = $gridContainer.height(),
+        morselTopPlacement;
 
     e.preventDefault();
 
+    //if it's too close to the bottom to fit
+    if(morselTop >= gridContainerHeight - morselFullHeight) {
+      //align it at the bottom
+      morselTopPlacement = gridContainerHeight - morselFullHeight;
+    } else {
+      morselTopPlacement = morselTop;
+    }
+
+    $closeBtn.css({
+      top: morselTopPlacement + 10
+    });
+
     $morselFullSlide.css({
-      top: morselTop,
+      top: morselTopPlacement,
       left: $morselLink.position().left,
       height: morselHeight,
       width: $morselLink.width()
@@ -126,14 +148,14 @@ $(function(){
 
       $morselFullSlide.css({
         left: 0,
-        top: '210px',
+        //top: '210px',
         width: '100%',
         height: morselFullHeight
       });
 
-      if(morselTop > morselHeight*2) {
+      /*if(morselTop > morselHeight*2) {
         $window.scrollTop(0);
-      }
+      }*/
 
       //check if we have cached data
       if(morselFullData[morselId]) {
@@ -180,7 +202,7 @@ $(function(){
 
       $morselFullContainer.removeClass('expanding').addClass('expanded');
       $morselFullSlide.css({
-        top: '210px',
+        //top: '210px',
         left: 'auto',
         height: 'auto',
         width: 'auto'
@@ -216,7 +238,7 @@ $(function(){
 
   function getUserPhoto(user) {
     if(user.photos) {
-      return user.photos._72x72;
+      return user.photos._40x40;
     } else {
       return userPlaceholderUrl;
     }

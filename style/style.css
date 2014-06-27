@@ -183,6 +183,7 @@ h1, h2, h3, h4, h5, a, .user {
 .morsel-caption-wrap {
   z-index: 3;
   display: table;
+  table-layout: fixed;
   text-align: center;
   width: 100%;
   position: absolute;
@@ -291,7 +292,7 @@ h1, h2, h3, h4, h5, a, .user {
 
 .morsel-full-slide .loader {
   display: none;
-  height: 470px;
+  height: 390px;
   margin-top: 0;
 }
 
@@ -317,10 +318,10 @@ h1, h2, h3, h4, h5, a, .user {
 }
 
 .user {
-  line-height: 72px;
+  line-height: 40px;
   vertical-align: middle;
   font-size: 22px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   font-weight: bold;
   display: inline-block;
 }
@@ -349,7 +350,6 @@ h1, h2, h3, h4, h5, a, .user {
 
 .close-btn {
   position: absolute;
-  top: 10px;
   right: 10px;
   padding: 5px;
   z-index: 11;
@@ -368,6 +368,7 @@ h1, h2, h3, h4, h5, a, .user {
   overflow: auto;
   padding: 5px 10px;
   line-height: 20px;
+  font-size: 14px;
 }
 
 .item-img-wrap {
@@ -376,7 +377,7 @@ h1, h2, h3, h4, h5, a, .user {
 }
 
 .morsel-full .morsel-title {
-  padding: 60px 20px 30px;
+  padding: 45px 20px 15px;
   font-size: 22px;
   font-weight: bold;
   text-transform: uppercase;
@@ -429,8 +430,8 @@ hr {
     transform: translate3d(0px, 0px, 0px) !important;
   }
 
-  .morsel-full-container.expanded .morsel-full-slide {
-    top: 0 !important;
+  .morsel-full-container {
+    overflow: auto;
   }
 }
 
@@ -445,22 +446,19 @@ hr {
 
   .morsel-full-slide {
     margin-top: 0;
+    margin-bottom: 5px;
     box-shadow: 0px 2px 3px 1px rgba(0,0,0,1);
     -webkit-box-shadow: 0px 2px 3px 1px rgba(0,0,0,1);
   }
 
   .morsel-full {
-    height: 470px;
+    height: 390px;
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
   }
 
   .morsel-mobile-info {
     display: none;
-  }
-
-  .close-btn {
-    top: 215px;
   }
 
   .morsel-item > div {
@@ -470,7 +468,15 @@ hr {
   }
 
   .item-description {
-    max-height: 165px;
+    max-height: 155px;
+  }
+
+  .item-description {
+    max-height: 210px;
+  }
+
+  .item-description.small-description {
+    max-height: 155px;
   }
 
   .morsel-item .morsel-title {
@@ -479,6 +485,7 @@ hr {
 
   .item-img {
     display: table;
+    table-layout: fixed;
     text-align: center;
     width: 100%;
     height: 100%;

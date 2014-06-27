@@ -37,6 +37,7 @@ request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%
       Key: gridFile,
       ACL: 'public-read',
       Body: gridFileContents,
+      ContentType: 'application/json'
     }, function(err, data) {
       if (err) {
         console.log('error uploading to s3: ');
@@ -74,6 +75,7 @@ request('http://api.eatmorsel.com/places/8/morsels.json?count=9&client%5Bdevice%
             Key: morselFile,
             ACL: 'public-read',
             Body: morselFileContents,
+            ContentType: 'application/json'
           }, function(err, data) {
             if (err) {
               console.log('error uploading to s3: ');

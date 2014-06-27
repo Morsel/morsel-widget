@@ -27,7 +27,7 @@
       <div class="user">
         <span><img src="<%= getUserPhoto(creator) %>" /></span> <%= creator.first_name + ' ' + creator.last_name %>
       </div>
-      <div class="item-description">
+      <div class="item-description <%= i < items.length-1 ? 'small-description' : '' %>">
         <p><%= items[i].description %></p>
       </div>
       <% if(i < items.length-1) { %>
