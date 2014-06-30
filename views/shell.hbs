@@ -13,7 +13,7 @@
     </header>
     <div style="max-width:1200;margin:0 auto;">
       <div style="padding:0;max-width:960px;margin:0 auto;border:0;height:100%">
-        {{#ifCond nodeEnv 'prod'}}
+        {{#ifCond nodeEnv 'production'}}
         <iframe border="0" frameborder="0" SCROLLING="no" style="border:0 none" src="http://press-widget.eatmorsel.com/places/{{{placeId}}}" width="100%"></iframe>
         <script type="text/javascript" src="http://press-widget.eatmorsel.com/js/iframeResizer.min.js"></script>
         {{else}}
