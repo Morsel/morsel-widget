@@ -74,19 +74,22 @@ $(function(){
           $morselImg,
           coverPhotoBig;
 
-      m.coverPhoto = getCoverPhoto(m);
-      if(m.coverPhoto) {
-        coverPhotoBig = getCoverPhoto(m, true);
-        $mrslTemp = $(_.template($mrslGridTemplate.html(), m));
-        $morselImg = $mrslTemp.find('.morsel-img');
-        $morselPreload.append($mrslTemp);
-        $mrslTemp.on('click', {
-          morselId: m.id
-        }, expandMorsel);
-        $imagePreload = $('<div><img src="'+coverPhotoBig+'" /></div>');
-        $imagePreload.waitForImages(function(){
-          $morselImg.css({'background-image':'url('+coverPhotoBig+')'});
-        });
+      //don't display if they're a draft
+      if(!m.draft) {
+        m.coverPhoto = getCoverPhoto(m);
+        if(m.coverPhoto) {
+          coverPhotoBig = getCoverPhoto(m, true);
+          $mrslTemp = $(_.template($mrslGridTemplate.html(), m));
+          $morselImg = $mrslTemp.find('.morsel-img');
+          $morselPreload.append($mrslTemp);
+          $mrslTemp.on('click', {
+            morselId: m.id
+          }, expandMorsel);
+          $imagePreload = $('<div><img src="'+coverPhotoBig+'" /></div>');
+          $imagePreload.waitForImages(function(){
+            $morselImg.css({'background-image':'url('+coverPhotoBig+')'});
+          });
+        }
       }
     });
 
