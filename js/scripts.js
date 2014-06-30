@@ -148,14 +148,9 @@ $(function(){
 
       $morselFullSlide.css({
         left: 0,
-        //top: '210px',
         width: '100%',
         height: morselFullHeight
       });
-
-      /*if(morselTop > morselHeight*2) {
-        $window.scrollTop(0);
-      }*/
 
       //check if we have cached data
       if(morselFullData[morselId]) {
@@ -202,10 +197,8 @@ $(function(){
 
       $morselFullContainer.removeClass('expanding').addClass('expanded');
       $morselFullSlide.css({
-        //top: '210px',
         left: 'auto',
-        height: 'auto',
-        width: 'auto'
+        height: 'auto'
       });
     });
   }
