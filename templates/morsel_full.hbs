@@ -28,7 +28,7 @@
         <span><img src="<%= getUserPhoto(creator) %>" /></span> <%= creator.first_name + ' ' + creator.last_name %>
       </div>
       <div class="item-description <%= i < items.length-1 ? 'small-description' : '' %>">
-        <p><%= items[i].description %></p>
+        <p><%= items[i].description.replace(/(\r\n|\n|\r)/g,"<br />") %></p>
       </div>
       <% if(i < items.length-1) { %>
       <div class="item-control next-item">
